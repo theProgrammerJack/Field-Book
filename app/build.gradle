@@ -1,8 +1,8 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion '25.0.0'
+    compileSdkVersion 24
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         applicationId "com.fieldbook.tracker"
@@ -17,10 +17,8 @@ android {
 
             signingConfig getSigningConfig()
             applicationVariants.all { variant ->
-                variant.outputs.each { output ->
-                    def newName = output.outputFile.name
-                    newName = newName.replace("app-release", "Field-Book")
-                    output.outputFile = new File(output.outputFile.parent, newName)
+                variant.outputs.all {
+                    outputFileName = "${variant.name}-${variant.versionName}.apk"
                 }
             }
         }
@@ -33,9 +31,12 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:22.2.0'
-    compile 'com.android.support:design:22.2.0'
-    compile 'org.jsoup:jsoup:1.8.1'
-    compile 'net.sourceforge.jexcelapi:jxl:2.6.10'
-    compile project(':dropbox')
+    implementation 'com.android.support:support-v4:24.2.1'
+    implementation 'com.android.support:design:24.2.1'
+    implementation 'org.jsoup:jsoup:1.8.1'
+    implementation 'net.sourceforge.jexcelapi:jxl:2.6.10'
+    implementation project(':dropbox')
+}
+repositories {
+    mavenCentral()
 }
